@@ -1,0 +1,46 @@
+*,
+*::before,
+*::after{
+    box-sizing: border-box;
+}
+
+.test{
+    border: 1px solid black;
+    margin: 1px;
+}
+.container{
+    display: flex;
+    flex-direction: row;
+    width: 900px;
+}
+.left-menu{
+    display: flex;
+    flex-direction: column;
+    min-width: 25%;
+}
+h3{
+    margin-left: auto;
+    margin-right: auto;
+}
+.filling-color-ctn, .background-color-ctn{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.filling-color{
+    min-width: 48%;
+    text-align: center;
+}
+.background-color{
+    min-width: 48%;
+    text-align: end;
+}
+
+.playing-canvas{
+    width: 100%;
+}
+tr, td{
+    height: 2rem;
+    width: 2rem;
+    border: 1px solid black;
+}
