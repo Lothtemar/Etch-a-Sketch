@@ -30,6 +30,12 @@ function buildApp(){
     leftMenu();
 };
 
+// COLORS VARIABLES
+
+let fillingSqareColor = "#000000";
+let backgroundSquareColor = "#ffffff";
+
+
 // MENU BUILD UP
 
 function leftMenu(){
@@ -39,7 +45,7 @@ function leftMenu(){
     div.classList.add("test", "left-menu");
     // H3 INSIDE CONTAINER
     const h3 = document.createElement("H3");
-    h3.textContent = "Menu Izquierda";
+    h3.textContent = "Interactive Menu";
     div.appendChild(h3);
     divSctnHTML.appendChild(div);
     buttonStructure();
@@ -54,17 +60,39 @@ function buttonStructure(){
     divFlngCtn.classList.add("test", "filling-color-ctn");
     const divFllngClr = document.createElement("div");
     divFllngClr.classList.add("test", "filling-color");
+
+        // INPUT FILLING COLOR
+    const inputFllnClr = document.createElement("input");
+    inputFllnClr.classList.add("input-color")
+    inputFllnClr.setAttribute("type", "color");
+    inputFllnClr.setAttribute("value", "#000000");
+    inputFllnClr.addEventListener("change", (e) => fillingSqareColor = e.target.value);
+    divFllngClr.appendChild(inputFllnClr);
+
     const paraFllngclr= document.createElement("p");
     paraFllngclr.classList.add("test", "filling-color");
     paraFllngclr.textContent = "Filling Color";
     divFlngCtn.appendChild(divFllngClr);
     divFlngCtn.appendChild(paraFllngclr);
     leftMenu.appendChild(divFlngCtn);
+
     // BACKGROUND COLOR
     const divBgClrCnt = document.createElement("div");
     divBgClrCnt.classList.add("test", "background-color-ctn");
     const divInBgClrCnt = document.createElement("div");
     divInBgClrCnt.classList.add("test", "background-color");
+
+        // INPUT BG COLOR
+    const inputFllnBg = document.createElement("input");
+    inputFllnBg.classList.add("input-color");
+    inputFllnBg.setAttribute("type", "color");
+    inputFllnBg.setAttribute("value", "#ffffff");
+    inputFllnBg.addEventListener("change", (e) => {
+        backgroundSquareColor = e.target.value;
+        const td = document.querySelectorAll("td").forEach(ele => ele.style.backgroundColor = backgroundSquareColor);
+    });
+    divInBgClrCnt.appendChild(inputFllnBg);
+
     const paraBgCnt = document.createElement("p");
     paraBgCnt.classList.add("test", "background-color");
     paraBgCnt.textContent = "Background Color";
@@ -93,7 +121,7 @@ function buttonStructure(){
 // PLAYING CANVAS BUILD UP
 
 function playingCanvas(dimmension){
-    console.log(dimmension);
+
     if (document.contains(document.querySelector("table"))){
         document.querySelector("table").remove();
     };
@@ -101,33 +129,32 @@ function playingCanvas(dimmension){
     const table = document.createElement("table");
     switch (dimmension) {
         case "1":
-            const tr = document.createElement("tr");
-            tr.appendChild(document.createElement("td"));
-            tr.appendChild(document.createElement("td"));
-            tr.appendChild(document.createElement("td"));
-            tr.appendChild(document.createElement("td"));
 
-            for (let i = 0; i < 4; i++){
-                table.appendChild(tr.cloneNode(true));
-            };
-
-            divSctnHTML.appendChild(table);
-            break;
-        case "2":
-
-            for(let i = 0; i < 8; i++){
+        for(let i = 0; i < 20; i++){
                 const tr = document.createElement("tr");
-                for (let j = 0; j < 8; j++){
+                for (let j = 0; j < 20; j++){
                     tr.appendChild(document.createElement("td"))
                 };
                 table.appendChild(tr);
             };
             divSctnHTML.appendChild(table);
+            break;
+        case "2":
+
+            for(let i = 0; i < 26; i++){
+                const tr = document.createElement("tr");
+                for (let j = 0; j < 26; j++){
+                    tr.appendChild(document.createElement("td"))
+                };
+                table.appendChild(tr);
+            };
+
+            divSctnHTML.appendChild(table);
         break;
         case "3":
-            for(let i = 0; i < 16; i++){
+            for(let i = 0; i < 30; i++){
                 const tr = document.createElement("tr");
-                for (j = 0; j < 16; j++){
+                for (j = 0; j < 30; j++){
                     tr.appendChild(document.createElement("td"));
                 };
                 table.appendChild(tr);
@@ -135,9 +162,9 @@ function playingCanvas(dimmension){
             divSctnHTML.appendChild(table);
         break;
         case "4":
-            for (let i = 0; i < 32; i++){
+            for (let i = 0; i < 36; i++){
                 const tr = document.createElement("tr");
-                for(let j = 0; j < 32; j++){
+                for(let j = 0; j < 36; j++){
                     tr.appendChild(document.createElement("td"));
                 };
                 table.appendChild(tr);
@@ -145,8 +172,13 @@ function playingCanvas(dimmension){
             divSctnHTML.appendChild(table);
         break;
     }
-    const tdGrab = document.querySelectorAll("td").forEach(el => {el.addEventListener("mouseover", (e) => {e.target.style.backgroundColor = "black"})});
-
+        const tdBgColorFollow = document.querySelectorAll("td").forEach(el => el.style.backgroundColor = backgroundSquareColor)
+        const tdGrab = document.querySelectorAll("td").forEach(el => {el.addEventListener("mouseenter", (e) => {
+            e.target.style.border = "1px solid red";
+            e.target.addEventListener("mouseleave", (e) => e.target.style.border = "1px solid black" );
+            e.target.addEventListener("click", (e) => e.target.style.backgroundColor = fillingSqareColor)
+            })
+        });
 
 };
 
