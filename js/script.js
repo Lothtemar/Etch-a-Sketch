@@ -40,11 +40,15 @@ let backgroundSquareColor = "#ffffff";
 // MENU BUILD UP
 
 function leftMenu(){
+
     // CONTAINER
+
     const divSctnHTML = document.querySelector(".container");
     const div = document.createElement("div");
     div.classList.add("test", "left-menu");
+
     // H3 INSIDE CONTAINER
+
     const h3 = document.createElement("H3");
     h3.textContent = "Interactive Menu";
     div.appendChild(h3);
@@ -54,7 +58,9 @@ function leftMenu(){
 
 
 function buttonStructure(){
+
     // FILLING COLOR
+
     const leftMenu = document.querySelector(".left-menu");
     const divFlngCtn = document.createElement("div");
     divFlngCtn.classList.add("test", "filling-color-ctn");
@@ -62,6 +68,7 @@ function buttonStructure(){
     divFllngClr.classList.add("test", "filling-color");
 
         // INPUT FILLING COLOR
+
     const inputFllnClr = document.createElement("input");
     inputFllnClr.classList.add("input-color")
     inputFllnClr.setAttribute("type", "color");
@@ -77,6 +84,7 @@ function buttonStructure(){
     leftMenu.appendChild(divFlngCtn);
 
     // GO WILD WITH COLORS
+
     const goWildWithColorsCnt = document.createElement("div");
     goWildWithColorsCnt.classList.add("rainbow-ctn");
     goWildWithColorsCnt.textContent = "Click to go Wild";
@@ -102,12 +110,14 @@ function buttonStructure(){
     leftMenu.appendChild(goWildWithColorsCnt);
 
     // BACKGROUND COLOR
+
     const divBgClrCnt = document.createElement("div");
     divBgClrCnt.classList.add("test", "background-color-ctn");
     const divInBgClrCnt = document.createElement("div");
     divInBgClrCnt.classList.add("test", "background-color");
 
         // INPUT BG COLOR
+
     const inputFllnBg = document.createElement("input");
     inputFllnBg.classList.add("input-color");
     inputFllnBg.setAttribute("type", "color");
@@ -124,7 +134,9 @@ function buttonStructure(){
     divBgClrCnt.appendChild(divInBgClrCnt);
     divBgClrCnt.appendChild(paraBgCnt);
     leftMenu.appendChild(divBgClrCnt);
-    //DIMENSION CANVAS
+    
+    // TO SET CANVAS DIMENSION
+
     const divDimensionSize = document.createElement("div");
     divDimensionSize.classList.add("test", "dimmension-txt");
     divDimensionSize.textContent = "Canvas Size";
@@ -132,15 +144,18 @@ function buttonStructure(){
     inputSizeCanvas.setAttribute("type", "range");
     inputSizeCanvas.setAttribute("min", "1");
     inputSizeCanvas.setAttribute("max", "5");
+    inputSizeCanvas.setAttribute("value", "1");
     inputSizeCanvas.classList.add("test", "dimmension-canvas");
     leftMenu.appendChild(divDimensionSize);
     leftMenu.appendChild(inputSizeCanvas);
     const canvasSize = document.querySelector(".dimmension-canvas");
-    // EVENT LISTENER TO SEND CANVAS SIZE
+
+    // EVENT LISTENER TO SEND CANVAS SIZE TO CANVAS BUILDER
+
     canvasSize.addEventListener("change", (e) => playingCanvas(e.target.value));
 };
 
-// PLAYING CANVAS BUILD UP
+// CANVAS BUILDER
 
 function playingCanvas(dimmension){
 
@@ -210,7 +225,6 @@ function playingCanvas(dimmension){
                     let td = document.createElement("td");
                     td.classList.add("sixtyFour")
                     tr.appendChild(td);
-                    /*tr.appendChild(document.createElement("td"));*/
                 };
                 table.appendChild(tr);
             }
@@ -231,26 +245,41 @@ function playingCanvas(dimmension){
             break;   
 
         };
+
+    // EVENT LISTENER TO CHECK IF MOUSE BUTTON IS CLICKED
+
+    let mouseDown = false;
+    document.addEventListener("mousedown", () => mouseDown = true);
+    document.addEventListener("mouseup", () => mouseDown = false);
+
+    // TO PAINT ALL CANVAS WITH THE SAME BACKGROUND COLOR
+
     const tdBgColorFollow = document.querySelectorAll("td").forEach(el => el.style.backgroundColor = backgroundSquareColor)
+   
+    // TO ALERT WITH BORDER RED THE CURRENT ELEMENT (TD)
+
     const tdGrab = document.querySelectorAll("td").forEach(el => {
-        el.addEventListener("mouseenter", (e) => {
+        el.addEventListener("mouseover", (e) => {
                 e.target.style.border = "1px solid red";
                 e.target.addEventListener("mouseleave", (e) => e.target.style.border = "1px solid black" );
-                e.target.addEventListener("click", (e) => {
-                        if(rainbowPointer === true){
-                            function randomColor(){
-                                let r = Math.floor(Math.random() * 256);
-                                let g = Math.floor(Math.random() * 256);
-                                let b = Math.floor(Math.random() * 256);
-                                return `rgb(${r}, ${g}, ${b})`;
-                            };
-                            e.target.style.backgroundColor = randomColor();
-                        } else {
-                        e.target.style.backgroundColor = fillingSqareColor;
-                        }  
+            })});
 
-                    })
-        });
+    // TO PAINT THE ELEMENTS (TD)
 
-    });
+    const tdColor = document.querySelectorAll("td").forEach(el => {
+                el.addEventListener("mouseover", (e) => {
+                    if(rainbowPointer === true & mouseDown === true){
+                        function randomColor(){
+                            let r = Math.floor(Math.random() * 256);
+                            let g = Math.floor(Math.random() * 256);
+                            let b = Math.floor(Math.random() * 256);
+                            return `rgb(${r}, ${g}, ${b})`;
+                        };
+                        e.target.style.backgroundColor = randomColor();
+                    } else if (mouseDown === true){
+                    e.target.style.backgroundColor = fillingSqareColor;
+                    }  
+
+                })});
 };
+
